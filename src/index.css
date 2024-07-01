@@ -1,0 +1,17 @@
+@font-face {
+  font-family: myFont;
+  src: url(../public/HelveticaNeue.ttc);
+}
+* {
+  margin: 0px;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: myFont;
+}
+
+html,
+body,
+#root {
+  font-family: myFont;
+  min-height: 100vh;
+}
