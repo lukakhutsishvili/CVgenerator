@@ -1,6 +1,6 @@
 @font-face {
   font-family: myFont;
-  src: url(../public/HelveticaNeue.ttc);
+  src: url(/HelveticaNeue.ttc);
 }
 * {
   margin: 0px;

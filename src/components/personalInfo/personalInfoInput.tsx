@@ -22,13 +22,13 @@ const Input: React.FC<InputProps> = ({
     formState: { errors, submitCount },
   } = useFormContext();
 
-  // const georgianRegex = /^[ა-ჰ]+$/;
+  const georgianRegex = /^[ა-ჰ]+$/;
 
-  // const validateGeorgian = (value: string) =>
-  //   georgianRegex.test(value) || "Must contain only Georgian characters";
+  const validateGeorgian = (value: string) =>
+    georgianRegex.test(value) || "Must contain only Georgian characters";
 
-  // const validateMinLength = (value: string) =>
-  //   value.length >= 2 || "Must be at least 2 characters";
+  const validateMinLength = (value: string) =>
+    value.length >= 2 || "Must be at least 2 characters";
 
   const validationRules: any = {
     required: "This field is required",
@@ -38,12 +38,12 @@ const Input: React.FC<InputProps> = ({
     },
   };
 
-  // if (name.includes("position") || name.includes("employer")) {
-  //   validationRules.validate = {
-  //     minLength: validateMinLength,
-  //     georgian: validateGeorgian,
-  //   };
-  // }
+  if (name.includes("name") || name.includes("surname")) {
+    validationRules.validate = {
+      minLength: validateMinLength,
+      georgian: validateGeorgian,
+    };
+  }
 
   const getNestedValue = (obj: any, path: string) => {
     return path
@@ -70,7 +70,7 @@ const Input: React.FC<InputProps> = ({
   };
 
   const renderStatusImage = () => {
-    if (name.includes("position") || name.includes("employer")) {
+    if (name === "name" || name === "surname") {
       if (submitCount !== 0) {
         if (!value && !errorMessage) {
           return null;
@@ -106,6 +106,7 @@ const Input: React.FC<InputProps> = ({
     }
   };
 
+  console.log(name);
   return (
     <div style={{ position: "relative" }}>
       <Label>{labelTxt}</Label>

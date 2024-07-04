@@ -57,7 +57,10 @@ const Input: React.FC<InputProps> = ({
 
   const getBorderColor = () => {
     if (submitCount !== 0) {
-      if (!value && !errorMessage) {
+      if (
+        (!value && !errorMessage) ||
+        (value === "mm/dd/yyyy" && !errorMessage)
+      ) {
         return "#bcbcbc";
       }
       if (errorMessage) {

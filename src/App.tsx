@@ -12,15 +12,24 @@ export type CvData = {
   finishingDate?: string;
   description?: string;
 }[];
+export type PersonaInfoCvData = {
+  name?: string;
+  surname?: string;
+  about?: string;
+};
 
 interface CvContextType {
   experienceCv: CvData;
   setExperienceCv: Dispatch<SetStateAction<CvData>>;
+  personalInfoCv: PersonaInfoCvData;
+  setPersonalInfoCv: Dispatch<SetStateAction<PersonaInfoCvData>>;
 }
 
 export const CvContext = createContext<CvContextType>({
   experienceCv: [],
   setExperienceCv: () => {},
+  personalInfoCv: {},
+  setPersonalInfoCv: () => {},
 });
 
 function App() {
@@ -33,11 +42,19 @@ function App() {
       description: "",
     },
   ]);
+  const [personalInfoCv, setPersonalInfoCv] = useState<PersonaInfoCvData>({});
 
   return (
-    <CvContext.Provider value={{ experienceCv, setExperienceCv }}>
+    <CvContext.Provider
+      value={{
+        experienceCv,
+        setExperienceCv,
+        personalInfoCv,
+        setPersonalInfoCv,
+      }}
+    >
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/Home" element={<Home />} />
         <Route path="/PersonalInfo" element={<PersonalInfo />} />
         <Route path="/Experience" element={<Experience />} />
         <Route path="/Education" element={<Education />} />

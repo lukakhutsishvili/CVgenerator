@@ -6,7 +6,6 @@ import { useLocation } from "react-router-dom";
 function CVcomponent() {
   const { experienceCv } = useContext(CvContext);
   const location = useLocation();
-  console.log(experienceCv);
 
   return (
     <div style={{ padding: "48px 75px" }}>
