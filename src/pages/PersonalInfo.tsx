@@ -6,7 +6,7 @@ import { useContext, useEffect, useState } from "react";
 import { CvContext, PersonaInfoCvData } from "../App";
 import CVcomponent from "../components/CVcomponent";
 import Header from "../components/personalInfo/Header";
-import Input from "../components/personalInfo/personalInfoInput";
+import Input from "../components/personalInfo/Input";
 
 type formTypes = {
   name: string;
@@ -84,22 +84,28 @@ export default function PersonalInfo() {
                   flexDirection: "column",
                 }}
               >
-                <Input
-                  type="text"
-                  labelTxt="სახელი"
-                  errorTxt="მინუმუმ 2 სიმბოლო"
-                  name={`name`}
-                >
-                  დეველოპერი, დიზაინერი, ა.შ.
-                </Input>
-                <Input
-                  type="text"
-                  labelTxt="გვარი"
-                  errorTxt="მინუმუმ 2 სიმბოლო"
-                  name={`surname`}
-                >
-                  დამსაქმებელი
-                </Input>
+                <div style={{ display: "flex", gap: "50px" }}>
+                  <div style={{ width: "calc(50% - 25px)" }}>
+                    <Input
+                      type="text"
+                      labelTxt="სახელი"
+                      errorTxt="მინუმუმ 2 სიმბოლო"
+                      name={`name`}
+                    >
+                      ანზორ
+                    </Input>
+                  </div>
+                  <div style={{ width: "calc(50% - 25px)" }}>
+                    <Input
+                      type="text"
+                      labelTxt="გვარი"
+                      errorTxt="მინუმუმ 2 სიმბოლო"
+                      name={`surname`}
+                    >
+                      მუმლაძე
+                    </Input>
+                  </div>
+                </div>
                 <TextArea
                   placeholder="როლი თანამდებობაზე და ზოგადი აღწერა"
                   {...register(`about`, {
