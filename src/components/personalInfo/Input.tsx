@@ -30,6 +30,9 @@ const Input: React.FC<InputProps> = ({
   const validateMinLength = (value: string) =>
     value.length >= 2 || "Must be at least 2 characters";
 
+  const validateEmail = (value: string) =>
+    value.endsWith("@redberry.ge") || "Email must end with @redberry.ge";
+
   const validationRules: any = {
     required: "This field is required",
     minLength: {
@@ -43,8 +46,11 @@ const Input: React.FC<InputProps> = ({
       minLength: validateMinLength,
       georgian: validateGeorgian,
     };
+  } else if (name === "email") {
+    validationRules.validate = {
+      email: validateEmail,
+    };
   }
-
   const getNestedValue = (obj: any, path: string) => {
     return path
       .split(/[\.\[\]]+/)
@@ -111,7 +117,7 @@ const Input: React.FC<InputProps> = ({
     <div style={{ position: "relative" }}>
       <Label>{labelTxt}</Label>
       <Inputs
-        placeholder={type === "text" ? children : ""}
+        placeholder={type === "text" || type === "email" ? children : ""}
         type={type}
         {...register(name, validationRules)}
         style={{

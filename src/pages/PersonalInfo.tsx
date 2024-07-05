@@ -140,7 +140,7 @@ export default function PersonalInfo() {
                   style={{ borderColor: getBorderColor() }}
                 ></TextArea>
                 <Input
-                  type="email"
+                  type="text"
                   labelTxt="ელ.ფოსტა"
                   errorTxt="უნდა მთავრდებოდეს @redberry.ge-ით"
                   name={`email`}
