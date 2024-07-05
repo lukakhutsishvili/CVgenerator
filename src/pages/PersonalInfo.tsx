@@ -12,6 +12,8 @@ type formTypes = {
   name: string;
   surname: string;
   about: string;
+  photoUrl: string;
+  email: string;
 };
 
 export default function PersonalInfo() {
@@ -153,6 +155,14 @@ export default function PersonalInfo() {
                   }}
                 ></div>
               </div>
+              <Input
+                type="email"
+                labelTxt="ელ.ფოსტა"
+                errorTxt="უნდა მთავრდებოდეს @redberry.ge-ით"
+                name={`email`}
+              >
+                anzorr666@redberry.ge
+              </Input>
             </section>
             <Footer>
               <Link to={"/Home"}>
