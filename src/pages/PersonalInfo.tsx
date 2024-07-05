@@ -139,30 +139,15 @@ export default function PersonalInfo() {
                   })}
                   style={{ borderColor: getBorderColor() }}
                 ></TextArea>
-                <div
-                  style={{
-                    marginTop: "56px",
-                    height: "1px",
-                    width: "100%",
-                    backgroundColor: "#bcbcbc",
-                  }}
-                ></div>
-                <div
-                  style={{
-                    width: "100%",
-                    display: "flex",
-                    justifyContent: "flex-end",
-                  }}
-                ></div>
+                <Input
+                  type="email"
+                  labelTxt="ელ.ფოსტა"
+                  errorTxt="უნდა მთავრდებოდეს @redberry.ge-ით"
+                  name={`email`}
+                >
+                  anzorr666@redberry.ge
+                </Input>
               </div>
-              <Input
-                type="email"
-                labelTxt="ელ.ფოსტა"
-                errorTxt="უნდა მთავრდებოდეს @redberry.ge-ით"
-                name={`email`}
-              >
-                anzorr666@redberry.ge
-              </Input>
             </section>
             <Footer>
               <Link to={"/Home"}>
