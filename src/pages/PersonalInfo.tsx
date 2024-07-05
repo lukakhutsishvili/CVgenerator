@@ -106,6 +106,30 @@ export default function PersonalInfo() {
                     </Input>
                   </div>
                 </div>
+                <div style={{ display: "flex", gap: "15px" }}>
+                  <span style={{ fontWeight: "500", fontSize: "18px" }}>
+                    პირადი ფოტოს ატვირთვა
+                  </span>
+                  <label htmlFor="file">
+                    <div
+                      style={{
+                        width: "107px",
+                        height: "27px",
+                        backgroundColor: "#0E80BF",
+                        borderRadius: "6px",
+                        display: "flex",
+                        justifyContent: "center",
+                        color: "white",
+                        alignItems: "center",
+                      }}
+                    >
+                      <p style={{ fontSize: "14px", fontWeight: "400" }}>
+                        ატვირთვა
+                      </p>
+                    </div>
+                  </label>
+                  <input id="file" type="file" style={{ display: "none" }} />
+                </div>
                 <TextArea
                   placeholder="როლი თანამდებობაზე და ზოგადი აღწერა"
                   {...register(`about`, {
