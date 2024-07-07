@@ -12,7 +12,7 @@ import { CvContext, PersonaInfoCvData } from "../App";
 import CVcomponent from "../components/CVcomponent";
 import Header from "../components/personalInfo/Header";
 import Input from "../components/personalInfo/Input";
-import InputMask from "react-input-mask";
+import { InputMask } from "@react-input/mask";
 
 type formTypes = {
   name: string;
@@ -23,10 +23,19 @@ type formTypes = {
   phoneNumber: string;
 };
 
+const defaultValues: formTypes = {
+  name: "",
+  surname: "",
+  about: "",
+  photoUrl: "",
+  email: "",
+  phoneNumber: "",
+};
+
 export default function PersonalInfo() {
   const navigate = useNavigate();
   const { personalInfoCv, setPersonalInfoCv } = useContext(CvContext);
-  const methods = useForm<formTypes>({});
+  const methods = useForm<formTypes>({ defaultValues });
 
   const submit = (data: formTypes) => {
     console.log(data);
@@ -119,7 +128,7 @@ export default function PersonalInfo() {
                       type="text"
                       labelTxt="სახელი"
                       errorTxt="მინუმუმ 2 სიმბოლო"
-                      name={`name`}
+                      name="name"
                     >
                       ანზორ
                     </Input>
@@ -129,7 +138,7 @@ export default function PersonalInfo() {
                       type="text"
                       labelTxt="გვარი"
                       errorTxt="მინუმუმ 2 სიმბოლო"
-                      name={`surname`}
+                      name="surname"
                     >
                       მუმლაძე
                     </Input>
@@ -166,7 +175,7 @@ export default function PersonalInfo() {
                 </div>
                 <TextArea
                   placeholder="როლი თანამდებობაზე და ზოგადი აღწერა"
-                  {...register(`about`, {
+                  {...register("about", {
                     required: true,
                   })}
                   style={{ borderColor: getBorderColor() }}
@@ -175,20 +184,24 @@ export default function PersonalInfo() {
                   type="text"
                   labelTxt="ელ.ფოსტა"
                   errorTxt="უნდა მთავრდებოდეს @redberry.ge-ით"
-                  name={`email`}
+                  name="email"
                 >
                   anzorr666@redberry.ge
                 </Input>
                 <Controller
                   control={control}
                   name="phoneNumber"
-                  defaultValue="+995"
+                  defaultValue="+(995)"
+                  rules={{
+                    required: true,
+                    minLength: 16,
+                  }}
                   render={({ field }) => (
                     <InputMask
                       {...field}
-                      mask="+999 999 99 99 99"
-                      maskPlaceholder={null} 
-                      onChange={(e) => {
+                      mask="+995 ___ __ __ __"
+                      replacement={{ _: /\d/ }}
+                      onChange={(e: any) => {
                         const { value } = e.target;
                         if (!value.startsWith("+995")) {
                           field.onChange("+995");
