@@ -11,7 +11,7 @@ export default function Header() {
       </Link>
       <SecondDiv>
         <HeaderTxt>პირადი ინფო</HeaderTxt>
-        <HeaderTxt>2/3</HeaderTxt>
+        <HeaderTxt>1/3</HeaderTxt>
       </SecondDiv>
     </HeaderDiv>
   );

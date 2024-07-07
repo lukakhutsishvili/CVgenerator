@@ -5,12 +5,14 @@ import {
   useForm,
   useController,
   useWatch,
+  Controller,
 } from "react-hook-form";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { CvContext, PersonaInfoCvData } from "../App";
 import CVcomponent from "../components/CVcomponent";
 import Header from "../components/personalInfo/Header";
 import Input from "../components/personalInfo/Input";
+import InputMask from "react-input-mask";
 
 type formTypes = {
   name: string;
@@ -18,10 +20,10 @@ type formTypes = {
   about: string;
   photoUrl: string;
   email: string;
+  phoneNumber: string;
 };
 
 export default function PersonalInfo() {
-  const [experienceInfo, setExperienceInfo] = useState<formTypes>();
   const navigate = useNavigate();
   const { personalInfoCv, setPersonalInfoCv } = useContext(CvContext);
   const methods = useForm<formTypes>({});
@@ -177,6 +179,26 @@ export default function PersonalInfo() {
                 >
                   anzorr666@redberry.ge
                 </Input>
+                <Controller
+                  control={control}
+                  name="phoneNumber"
+                  defaultValue="+995"
+                  render={({ field }) => (
+                    <InputMask
+                      {...field}
+                      mask="+999 999 99 99 99"
+                      maskPlaceholder={null} 
+                      onChange={(e) => {
+                        const { value } = e.target;
+                        if (!value.startsWith("+995")) {
+                          field.onChange("+995");
+                        } else {
+                          field.onChange(value);
+                        }
+                      }}
+                    />
+                  )}
+                />
               </div>
             </section>
             <Footer>
