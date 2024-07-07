@@ -76,43 +76,40 @@ const Input: React.FC<InputProps> = ({
   };
 
   const renderStatusImage = () => {
-    if (name === "name" || name === "surname") {
-      if (submitCount !== 0) {
-        if (!value && !errorMessage) {
-          return null;
-        }
-        if (errorMessage) {
-          return (
-            <img
-              style={{
-                position: "absolute",
-                top: "50%",
-                transform: "translateY(-50%)",
-                right: "-37.5px",
-              }}
-              src="/images/warning.png"
-              alt="Warning"
-            />
-          );
-        } else {
-          return (
-            <img
-              src="/images/done.png"
-              alt="Done"
-              style={{
-                position: "absolute",
-                top: "50%",
-                transform: "translateY(-30%)",
-                right: "14.8px",
-              }}
-            />
-          );
-        }
+    if (submitCount !== 0) {
+      if (!value && !errorMessage) {
+        return null;
+      }
+      if (errorMessage) {
+        return (
+          <img
+            style={{
+              position: "absolute",
+              top: "50%",
+              transform: "translateY(-50%)",
+              right: "-37.5px",
+            }}
+            src="/images/warning.png"
+            alt="Warning"
+          />
+        );
+      } else {
+        return (
+          <img
+            src="/images/done.png"
+            alt="Done"
+            style={{
+              position: "absolute",
+              top: "50%",
+              transform: "translateY(-30%)",
+              right: "14.8px",
+            }}
+          />
+        );
       }
     }
   };
 
-  console.log(name);
   return (
     <div style={{ position: "relative" }}>
       <Label>{labelTxt}</Label>

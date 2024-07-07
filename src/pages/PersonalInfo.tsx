@@ -1,7 +1,11 @@
 import styled from "styled-components";
-
 import { Link, useNavigate } from "react-router-dom";
-import { FormProvider, useForm, useWatch } from "react-hook-form";
+import {
+  FormProvider,
+  useForm,
+  useController,
+  useWatch,
+} from "react-hook-form";
 import { useContext, useEffect, useState } from "react";
 import { CvContext, PersonaInfoCvData } from "../App";
 import CVcomponent from "../components/CVcomponent";
@@ -23,10 +27,25 @@ export default function PersonalInfo() {
   const methods = useForm<formTypes>({});
 
   const submit = (data: formTypes) => {
-    setExperienceInfo(data);
-    navigate("/Experience");
+    console.log(data);
+    navigate("/Experience"); // navigate to the next page
   };
 
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const result = reader.result as string;
+        photoUrlField.onChange(result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  localStorage.removeItem("photoUrl");
   const {
     handleSubmit,
     control,
@@ -34,6 +53,12 @@ export default function PersonalInfo() {
     watch,
     formState: { submitCount, errors },
   } = methods;
+
+  const { field: photoUrlField } = useController({
+    name: "photoUrl",
+    control,
+    rules: { required: true },
+  });
 
   const getBorderColor = () => {
     const value = watch();
@@ -49,12 +74,12 @@ export default function PersonalInfo() {
     }
     return "#bcbcbc";
   };
-  console.log("asd");
 
   const values = useWatch({ control });
   useEffect(() => {
     setPersonalInfoCv(values as PersonaInfoCvData);
   }, [values, setPersonalInfoCv]);
+
   useEffect(() => {
     const savedData = localStorage.getItem("personalInfoData");
     if (savedData) {
@@ -130,7 +155,12 @@ export default function PersonalInfo() {
                       </p>
                     </div>
                   </label>
-                  <input id="file" type="file" style={{ display: "none" }} />
+                  <input
+                    id="file"
+                    type="file"
+                    style={{ display: "none" }}
+                    onChange={handleFileChange}
+                  />
                 </div>
                 <TextArea
                   placeholder="როლი თანამდებობაზე და ზოგადი აღწერა"
@@ -153,7 +183,7 @@ export default function PersonalInfo() {
               <Link to={"/Home"}>
                 <BlueButton type="button">უკან</BlueButton>
               </Link>
-              <BlueButton>შემდეგი</BlueButton>
+              <BlueButton type="submit">შემდეგი</BlueButton>
             </Footer>
           </MainDiv>
         </form>
