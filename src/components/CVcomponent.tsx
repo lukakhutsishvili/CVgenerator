@@ -1,14 +1,48 @@
-import { useContext } from "react";
 import styled from "styled-components";
-import { CvContext } from "../App";
 import { useLocation } from "react-router-dom";
 
 function CVcomponent() {
-  const { experienceCv } = useContext(CvContext);
   const location = useLocation();
+
+  const personalInfoDataString = localStorage.getItem("personalInfoData");
+  let personalInfoData;
+  if (personalInfoDataString) {
+    personalInfoData = JSON.parse(personalInfoDataString);
+  }
+
+  const experienceDataString = localStorage.getItem("experienceFormData");
+  let experienceData;
+  if (experienceDataString) {
+    experienceData = JSON.parse(experienceDataString);
+  }
 
   return (
     <div style={{ padding: "48px 75px" }}>
+      <div>
+        <Experience style={{ fontSize: "34px" }}>
+          {personalInfoData.name}
+        </Experience>
+        <Experience style={{ fontSize: "34px" }}>
+          {personalInfoData.surname}
+        </Experience>
+        <div style={{ marginTop: "17px", display: "flex" }}>
+          <img src="" />
+          {personalInfoData.email}
+        </div>
+        <div style={{ marginTop: "17px", display: "flex" }}>
+          <img src="" />
+          {personalInfoData.phoneNumber}
+        </div>
+        {personalInfoData.about !== "" && (
+          <>
+            <p>ჩემს შესახებ </p> <p>{personalInfoData.about}</p>
+          </>
+        )}
+      </div>
+
+      {
+        //experience page
+      }
       {location.pathname === "/" ||
         (location.pathname === "/PersonalInfo" ? null : (
           <>
@@ -21,7 +55,7 @@ function CVcomponent() {
               }}
             ></div>
             <Experience>ᲒᲐᲛᲝᲪᲓᲘᲚᲔᲑᲐ</Experience>
-            {experienceCv.map((item, index) => (
+            {experienceData.map((item: any, index: any) => (
               <div key={index} style={{ marginTop: "15px" }}>
                 <div style={{ display: "flex" }}>
                   <Position>{`${item.position} ${item.employer}`}</Position>

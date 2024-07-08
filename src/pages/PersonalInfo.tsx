@@ -7,8 +7,7 @@ import {
   useWatch,
   Controller,
 } from "react-hook-form";
-import { useContext, useEffect } from "react";
-import { CvContext, PersonaInfoCvData } from "../App";
+import { useEffect } from "react";
 import CVcomponent from "../components/CVcomponent";
 import Header from "../components/personalInfo/Header";
 import Input from "../components/personalInfo/Input";
@@ -34,12 +33,11 @@ const defaultValues: formTypes = {
 
 export default function PersonalInfo() {
   const navigate = useNavigate();
-  const { personalInfoCv, setPersonalInfoCv } = useContext(CvContext);
   const methods = useForm<formTypes>({ defaultValues });
 
   const submit = (data: formTypes) => {
     console.log(data);
-    navigate("/Experience"); // navigate to the next page
+    navigate("/Experience");
   };
 
   const handleFileChange = async (
@@ -87,9 +85,6 @@ export default function PersonalInfo() {
   };
 
   const values = useWatch({ control });
-  useEffect(() => {
-    setPersonalInfoCv(values as PersonaInfoCvData);
-  }, [values, setPersonalInfoCv]);
 
   useEffect(() => {
     const savedData = localStorage.getItem("personalInfoData");
@@ -106,7 +101,7 @@ export default function PersonalInfo() {
     return () => {
       subscription.unsubscribe();
     };
-  }, [methods, personalInfoCv, setPersonalInfoCv]);
+  }, [methods]);
 
   const renderStatusImage = () => {
     if (submitCount !== 0) {
@@ -142,6 +137,8 @@ export default function PersonalInfo() {
       }
     }
   };
+
+  console.log(values);
 
   return (
     <div style={{ display: "flex" }}>
@@ -224,6 +221,15 @@ export default function PersonalInfo() {
                   anzorr666@redberry.ge
                 </Input>
                 <div style={{ position: "relative" }}>
+                  <label
+                    style={{
+                      marginBottom: "8px",
+                      display: "block",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    მობილურის ნომერი
+                  </label>
                   <Controller
                     control={control}
                     name="phoneNumber"
@@ -250,6 +256,9 @@ export default function PersonalInfo() {
                     )}
                   />
                   {renderStatusImage()}
+                  <p style={{ marginTop: "8px", fontSize: "14px" }}>
+                    უნდა აკმაყოფილებდეს ქართული მობილურის ნომრის ფორმატს
+                  </p>
                 </div>
               </div>
             </section>
@@ -316,7 +325,7 @@ export const BlueButton = styled(LightSkyButton)`
   padding: 10px 18px;
 `;
 const StyledInputMask = styled(InputMask)`
-  height: 40px;
+  height: 48px;
   width: 100%;
   padding: 0 16px;
   border: 1px solid;

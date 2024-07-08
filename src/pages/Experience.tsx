@@ -1,13 +1,7 @@
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  FormProvider,
-  useForm,
-  useFieldArray,
-  useWatch,
-} from "react-hook-form";
-import { useContext, useEffect, useState } from "react";
-import { CvContext, CvData } from "../App";
+import { FormProvider, useForm, useFieldArray } from "react-hook-form";
+import {  useEffect } from "react";
 import CVcomponent from "../components/CVcomponent";
 import Input from "../components/experience/Input";
 import Header from "../components/experience/Header";
@@ -23,9 +17,7 @@ type formTypes = {
 };
 
 export default function Experience() {
-  const [experienceInfo, setExperienceInfo] = useState<formTypes>();
   const navigate = useNavigate();
-  const { setExperienceCv, experienceCv } = useContext(CvContext);
   const methods = useForm<formTypes>({
     defaultValues: {
       experience: [
@@ -40,8 +32,7 @@ export default function Experience() {
     },
   });
 
-  const submit = (data: formTypes) => {
-    setExperienceInfo(data);
+  const submit = () => {
     navigate("/Education");
   };
 
@@ -72,11 +63,6 @@ export default function Experience() {
     return "#bcbcbc";
   };
 
-  const values = useWatch({ control, name: `experience` });
-  useEffect(() => {
-    setExperienceCv(values as CvData);
-  }, [values, setExperienceCv]);
-  console.log(experienceInfo);
   useEffect(() => {
     const savedData = localStorage.getItem("experienceFormData");
     if (savedData) {
@@ -92,7 +78,7 @@ export default function Experience() {
     return () => {
       subscription.unsubscribe();
     };
-  }, [methods, setExperienceCv, experienceCv]);
+  }, [methods]);
 
   return (
     <div style={{ display: "flex" }}>
