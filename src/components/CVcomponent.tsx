@@ -14,6 +14,7 @@ function CVcomponent() {
   let experienceData;
   if (experienceDataString) {
     experienceData = JSON.parse(experienceDataString);
+    experienceData = experienceData.experience;
   }
 
   return (
@@ -55,18 +56,19 @@ function CVcomponent() {
               }}
             ></div>
             <Experience>ᲒᲐᲛᲝᲪᲓᲘᲚᲔᲑᲐ</Experience>
-            {experienceData.map((item: any, index: any) => (
-              <div key={index} style={{ marginTop: "15px" }}>
-                <div style={{ display: "flex" }}>
-                  <Position>{`${item.position} ${item.employer}`}</Position>
-                </div>
-                <div style={{ display: "flex", marginTop: "7px" }}>
-                  <Date>{`${item.startingDate} ${item.finishingDate}`}</Date>
-                </div>
+            {experienceData &&
+              experienceData.map((item: any, index: any) => (
+                <div key={index} style={{ marginTop: "15px" }}>
+                  <div style={{ display: "flex" }}>
+                    <Position>{`${item.position} ${item.employer}`}</Position>
+                  </div>
+                  <div style={{ display: "flex", marginTop: "7px" }}>
+                    <Date>{`${item.startingDate} ${item.finishingDate}`}</Date>
+                  </div>
 
-                <Description>{item.description}</Description>
-              </div>
-            ))}
+                  <Description>{item.description}</Description>
+                </div>
+              ))}
           </>
         ))}
     </div>
