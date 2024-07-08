@@ -71,10 +71,10 @@ export default function PersonalInfo() {
     rules: { required: true },
   });
 
-  const getBorderColor = () => {
-    const value = watch();
+  const getBorderColor = (name: keyof formTypes) => {
+    const value = watch(name);
     const hasSubmitted = submitCount > 0;
-    const error = errors?.about;
+    const error = errors[name];
 
     if (hasSubmitted) {
       if (error) {
@@ -107,6 +107,41 @@ export default function PersonalInfo() {
       subscription.unsubscribe();
     };
   }, [methods, personalInfoCv, setPersonalInfoCv]);
+
+  const renderStatusImage = () => {
+    if (submitCount !== 0) {
+      if (!values.phoneNumber && !errors.phoneNumber) {
+        return null;
+      }
+      if (errors.phoneNumber) {
+        return (
+          <img
+            style={{
+              position: "absolute",
+              top: "50%",
+              transform: "translateY(-50%)",
+              right: "-37.5px",
+            }}
+            src="/images/warning.png"
+            alt="Warning"
+          />
+        );
+      } else {
+        return (
+          <img
+            src="/images/done.png"
+            alt="Done"
+            style={{
+              position: "absolute",
+              top: "50%",
+              transform: "translateY(-30%)",
+              right: "14.8px",
+            }}
+          />
+        );
+      }
+    }
+  };
 
   return (
     <div style={{ display: "flex" }}>
@@ -178,7 +213,7 @@ export default function PersonalInfo() {
                   {...register("about", {
                     required: true,
                   })}
-                  style={{ borderColor: getBorderColor() }}
+                  style={{ borderColor: getBorderColor("about") }}
                 ></TextArea>
                 <Input
                   type="text"
@@ -188,30 +223,34 @@ export default function PersonalInfo() {
                 >
                   anzorr666@redberry.ge
                 </Input>
-                <Controller
-                  control={control}
-                  name="phoneNumber"
-                  defaultValue="+(995)"
-                  rules={{
-                    required: true,
-                    minLength: 16,
-                  }}
-                  render={({ field }) => (
-                    <InputMask
-                      {...field}
-                      mask="+995 ___ __ __ __"
-                      replacement={{ _: /\d/ }}
-                      onChange={(e: any) => {
-                        const { value } = e.target;
-                        if (!value.startsWith("+995")) {
-                          field.onChange("+995");
-                        } else {
-                          field.onChange(value);
-                        }
-                      }}
-                    />
-                  )}
-                />
+                <div style={{ position: "relative" }}>
+                  <Controller
+                    control={control}
+                    name="phoneNumber"
+                    defaultValue="+(995)"
+                    rules={{
+                      required: true,
+                      minLength: 16,
+                    }}
+                    render={({ field }) => (
+                      <StyledInputMask
+                        getbordercolor={getBorderColor("phoneNumber")}
+                        {...field}
+                        mask="+995 ___ __ __ __"
+                        replacement={{ _: /\d/ }}
+                        onChange={(e: any) => {
+                          const { value } = e.target;
+                          if (!value.startsWith("+995")) {
+                            field.onChange("+995");
+                          } else {
+                            field.onChange(value);
+                          }
+                        }}
+                      />
+                    )}
+                  />
+                  {renderStatusImage()}
+                </div>
               </div>
             </section>
             <Footer>
@@ -275,4 +314,20 @@ export const LightSkyButton = styled.button`
 export const BlueButton = styled(LightSkyButton)`
   background-color: #6b40e3;
   padding: 10px 18px;
+`;
+const StyledInputMask = styled(InputMask)`
+  height: 40px;
+  width: 100%;
+  padding: 0 16px;
+  border: 1px solid;
+  border-radius: 4px;
+  outline: none;
+  font-size: 16px;
+  color: #333;
+  background-color: #fff;
+  border-color: ${(props) => props.getbordercolor};
+
+  &::placeholder {
+    color: #aaa;
+  }
 `;

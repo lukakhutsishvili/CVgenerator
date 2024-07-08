@@ -32,8 +32,8 @@ export default function Experience() {
         {
           position: "",
           employer: "",
-          startingDate: "mm/dd/yyyy",
-          finishingDate: "mm/dd/yyyy",
+          startingDate: "",
+          finishingDate: "",
           description: "",
         },
       ],
@@ -181,8 +181,8 @@ export default function Experience() {
                   append({
                     position: "",
                     employer: "",
-                    startingDate: "mm/dd/yyyy",
-                    finishingDate: "mm/dd/yyyy",
+                    startingDate: "",
+                    finishingDate: "",
                     description: "",
                   })
                 }
