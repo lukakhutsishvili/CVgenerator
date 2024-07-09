@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import styled from "styled-components";
+import { formTypes } from "../pages/Education";
 
 type CustomSelectProps = {
   options: string[];
   defaultValue: string;
-  index: any;
+  index: number;
 };
 
 const CustomSelect: React.FC<CustomSelectProps> = ({
@@ -16,20 +17,51 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
   const [selectedOption, setSelectedOption] = useState(defaultValue);
   const [isOpen, setIsOpen] = useState(false);
 
+  const {
+    setValue,
+    setError,
+    clearErrors,
+    watch,
+    formState: { errors, submitCount },
+  } = useFormContext<formTypes>();
+
   const handleSelectOption = (option: string) => {
     setSelectedOption(option);
     setIsOpen(false);
   };
 
-  const { setValue } = useFormContext();
-
   useEffect(() => {
-    setValue(`education.${index}.description`, selectedOption);
-  }, [selectedOption, setValue]);
+    setValue(`education.${index}.quality`, selectedOption);
+    if (selectedOption === defaultValue) {
+      setError(`education.${index}.quality`, {
+        type: "manual",
+        message: "Please select a different option",
+      });
+    } else {
+      clearErrors(`education.${index}.quality`);
+    }
+  }, [selectedOption, setValue, setError, clearErrors, defaultValue, index]);
+  console.log(errors);
+
+  const getBorderColor = () => {
+    const value = watch(`education.${index}.description`);
+    const hasSubmitted = submitCount > 0;
+    const error = errors?.education?.[index]?.quality;
+
+    if (hasSubmitted) {
+      if (error) {
+        return "#ef5050";
+      } else if (value) {
+        return "#98e37e";
+      }
+    }
+    return "#bcbcbc";
+  };
 
   return (
     <SelectContainer>
       <SelectedOption
+        style={{ borderColor: getBorderColor() }}
         onClick={() => setIsOpen(!isOpen)}
         isdefault={selectedOption === defaultValue}
       >
@@ -38,8 +70,8 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
       </SelectedOption>
       {isOpen && (
         <Dropdown>
-          {options.map((option, index) => (
-            <Option key={index} onClick={() => handleSelectOption(option)}>
+          {options.map((option, idx) => (
+            <Option key={idx} onClick={() => handleSelectOption(option)}>
               {option}
             </Option>
           ))}
@@ -65,7 +97,7 @@ const SelectedOption = styled.div<{
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid;
   border-radius: 5px;
   background-color: #fff;
   cursor: pointer;

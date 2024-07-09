@@ -7,7 +7,7 @@ import Input from "../components/education/Input";
 import Header from "../components/education/Header";
 import CustomSelect from "../components/customSelect";
 
-type formTypes = {
+export type formTypes = {
   education: {
     school: string;
     quality: string;
