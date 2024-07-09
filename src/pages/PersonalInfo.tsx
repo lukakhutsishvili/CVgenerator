@@ -233,7 +233,6 @@ export default function PersonalInfo() {
                   <Controller
                     control={control}
                     name="phoneNumber"
-                    defaultValue="+(995)"
                     rules={{
                       required: true,
                       minLength: 16,
@@ -243,6 +242,7 @@ export default function PersonalInfo() {
                         getbordercolor={getBorderColor("phoneNumber")}
                         {...field}
                         mask="+995 ___ __ __ __"
+                        placeholder="+995 551 12 34 56"
                         replacement={{ _: /\d/ }}
                         onChange={(e: any) => {
                           const { value } = e.target;

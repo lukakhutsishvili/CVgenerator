@@ -20,7 +20,11 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
 
   return (
     <SelectContainer>
-      <SelectedOption onClick={() => setIsOpen(!isOpen)}>
+      <SelectedOption
+        onClick={() => setIsOpen(!isOpen)}
+        selectedOption={selectedOption}
+        defaultValue={defaultValue}
+      >
         {selectedOption}
         <Arrow />
       </SelectedOption>
@@ -41,12 +45,15 @@ export default CustomSelect;
 
 const SelectContainer = styled.div`
   position: relative;
-  width: webkit-fill-available;
+  width: -webkit-fill-available;
   height: 48px;
   margin-top: 8px;
 `;
 
-const SelectedOption = styled.div`
+const SelectedOption = styled.div<{
+  selectedOption: string;
+  defaultValue: string;
+}>`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -56,6 +63,8 @@ const SelectedOption = styled.div`
   background-color: #fff;
   cursor: pointer;
   height: 48px;
+  color: ${({ selectedOption, defaultValue }) =>
+    selectedOption === defaultValue ? "rgba(0, 0, 0, 0.6)" : "#000"};
 `;
 
 const Arrow = styled.span`
