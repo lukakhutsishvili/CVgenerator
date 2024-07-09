@@ -3,13 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { FormProvider, useForm, useFieldArray } from "react-hook-form";
 import { useEffect } from "react";
 import CVcomponent from "../components/CVcomponent";
-import Input from "../components/experience/Input";
-import Header from "../components/experience/Header";
+import Input from "../components/education/Input";
+import Header from "../components/education/Header";
+import CustomSelect from "../components/customSelect";
 
 type formTypes = {
-  experience: {
-    position: string;
-    employer: string;
+  education: {
+    school: string;
+    quality: string;
     startingDate: string;
     finishingDate: string;
     description: string;
@@ -20,10 +21,10 @@ export default function Education() {
   const navigate = useNavigate();
   const methods = useForm<formTypes>({
     defaultValues: {
-      experience: [
+      education: [
         {
-          position: "",
-          employer: "",
+          school: "",
+          quality: "",
           startingDate: "",
           finishingDate: "",
           description: "",
@@ -45,13 +46,13 @@ export default function Education() {
   } = methods;
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "experience",
+    name: "education",
   });
 
   const getBorderColor = (index: number) => {
-    const value = watch(`experience.${index}.description`);
+    const value = watch(`education.${index}.description`);
     const hasSubmitted = submitCount > 0;
-    const error = errors?.experience?.[index]?.description;
+    const error = errors?.education?.[index]?.description;
 
     if (hasSubmitted) {
       if (error) {
@@ -64,7 +65,7 @@ export default function Education() {
   };
 
   useEffect(() => {
-    const savedData = localStorage.getItem("experienceFormData");
+    const savedData = localStorage.getItem("educationFormData");
     if (savedData) {
       methods.reset(JSON.parse(savedData));
     }
@@ -72,7 +73,7 @@ export default function Education() {
 
   useEffect(() => {
     const subscription = methods.watch((value) => {
-      localStorage.setItem("experienceFormData", JSON.stringify(value));
+      localStorage.setItem("educationFormData", JSON.stringify(value));
     });
 
     return () => {
@@ -99,39 +100,34 @@ export default function Education() {
                 >
                   <Input
                     type="text"
-                    labelTxt="თანამდებობა"
+                    labelTxt="სასწავლებელი"
                     errorTxt="მინუმუმ 2 სიმბოლო"
-                    name={`experience.[${index}].position`}
+                    name={`education.[${index}].position`}
                   >
                     დეველოპერი, დიზაინერი, ა.შ.
                   </Input>
-                  <Input
-                    type="text"
-                    labelTxt="დამსაქმებელი"
-                    errorTxt="მინუმუმ 2 სიმბოლო"
-                    name={`experience.[${index}].employer`}
-                  >
-                    დამსაქმებელი
-                  </Input>
                   <div style={{ display: "flex", gap: "56px" }}>
-                    <div style={{ width: "calc(50% - 23px)" }}>
-                      <Input
-                        type="date"
-                        labelTxt="დაწყების რიცხვი"
-                        name={`experience.[${index}].startingDate`}
-                      ></Input>
+                    <div
+                      className="custom-select"
+                      style={{ width: "calc(50% - 23px)" }}
+                    >
+                      <Label>ხარისხი</Label>
+                      <CustomSelect
+                        defaultValue="options"
+                        options={["alo", "fu", "jeka"]}
+                      />
                     </div>
                     <div style={{ width: "calc(50% - 23px)" }}>
                       <Input
                         type="date"
-                        labelTxt="დაწყების რიცხვი"
-                        name={`experience.${index}.finishingDate`}
+                        labelTxt="დამთავრების რიცხვი"
+                        name={`education.${index}.finishingDate`}
                       ></Input>
                     </div>
                   </div>
                   <TextArea
                     placeholder="როლი თანამდებობაზე და ზოგადი აღწერა"
-                    {...register(`experience.${index}.description`, {
+                    {...register(`education.${index}.description`, {
                       required: true,
                     })}
                     style={{ borderColor: getBorderColor(index) }}
@@ -153,7 +149,7 @@ export default function Education() {
                   >
                     {index !== 0 && (
                       <DeleteButton type="button" onClick={() => remove(index)}>
-                        გამოცდილების წაშლა
+                        განათლების წაშლა
                       </DeleteButton>
                     )}
                   </div>
@@ -165,8 +161,8 @@ export default function Education() {
                 type="button"
                 onClick={() =>
                   append({
-                    position: "",
-                    employer: "",
+                    school: "",
+                    quality: "",
                     startingDate: "",
                     finishingDate: "",
                     description: "",
@@ -257,4 +253,9 @@ export const LightSkyButton = styled.button`
 export const BlueButton = styled(LightSkyButton)`
   background-color: #6b40e3;
   padding: 10px 18px;
+`;
+const Label = styled.label`
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 1.31;
 `;
