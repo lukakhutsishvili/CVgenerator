@@ -20,23 +20,42 @@ function CVcomponent() {
   return (
     <div style={{ padding: "48px 75px" }}>
       <div>
-        <Experience style={{ fontSize: "34px" }}>
+        <Experience style={{ fontSize: "34px", display: "inline-block" }}>
           {personalInfoData.name}
         </Experience>
-        <Experience style={{ fontSize: "34px" }}>
+        <Experience
+          style={{
+            fontSize: "34px",
+            display: "inline-block",
+            marginLeft: "20px",
+          }}
+        >
           {personalInfoData.surname}
         </Experience>
         <div style={{ marginTop: "17px", display: "flex" }}>
-          <img src="" />
-          {personalInfoData.email}
+          <img src="/images/Vector (1).png" />
+          <p
+            style={{ fontSize: "18px", fontWeight: "500", marginLeft: "12px" }}
+          >
+            {personalInfoData.email}
+          </p>
         </div>
-        <div style={{ marginTop: "17px", display: "flex" }}>
-          <img src="" />
-          {personalInfoData.phoneNumber}
+        <div style={{ marginTop: "10px", display: "flex" }}>
+          <img src="/images/Vector (2).png" />
+          <p
+            style={{ fontSize: "18px", fontWeight: "500", marginLeft: "12px" }}
+          >
+            {personalInfoData.phoneNumber}
+          </p>
         </div>
         {personalInfoData.about !== "" && (
           <>
-            <p>ჩემს შესახებ </p> <p>{personalInfoData.about}</p>
+            <Experience>ჩემს შესახებ </Experience>
+            <p
+              style={{ fontSize: "18px", fontWeight: "500", marginTop: "15px" }}
+            >
+              {personalInfoData.about}
+            </p>
           </>
         )}
       </div>
