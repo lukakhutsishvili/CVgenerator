@@ -102,7 +102,7 @@ export default function Education() {
                     type="text"
                     labelTxt="სასწავლებელი"
                     errorTxt="მინუმუმ 2 სიმბოლო"
-                    name={`education.[${index}].position`}
+                    name={`education.[${index}].school`}
                   >
                     დეველოპერი, დიზაინერი, ა.შ.
                   </Input>
@@ -113,8 +113,9 @@ export default function Education() {
                     >
                       <Label>ხარისხი</Label>
                       <CustomSelect
-                        defaultValue="options"
+                        defaultValue="აირჩიეთ ხარისხი"
                         options={["alo", "fu", "jeka"]}
+                        index={index}
                       />
                     </div>
                     <div style={{ width: "calc(50% - 23px)" }}>

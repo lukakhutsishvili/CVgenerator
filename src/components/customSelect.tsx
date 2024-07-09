@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useFormContext } from "react-hook-form";
 import styled from "styled-components";
 
 type CustomSelectProps = {
   options: string[];
   defaultValue: string;
+  index: any;
 };
 
 const CustomSelect: React.FC<CustomSelectProps> = ({
   options,
   defaultValue,
+  index,
 }) => {
   const [selectedOption, setSelectedOption] = useState(defaultValue);
   const [isOpen, setIsOpen] = useState(false);
@@ -18,12 +21,17 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
     setIsOpen(false);
   };
 
+  const { setValue } = useFormContext();
+
+  useEffect(() => {
+    setValue(`education.${index}.description`, selectedOption);
+  }, [selectedOption, setValue]);
+
   return (
     <SelectContainer>
       <SelectedOption
         onClick={() => setIsOpen(!isOpen)}
-        selectedOption={selectedOption}
-        defaultValue={defaultValue}
+        isdefault={selectedOption === defaultValue}
       >
         {selectedOption}
         <Arrow />
@@ -51,8 +59,7 @@ const SelectContainer = styled.div`
 `;
 
 const SelectedOption = styled.div<{
-  selectedOption: string;
-  defaultValue: string;
+  isdefault: boolean;
 }>`
   display: flex;
   justify-content: space-between;
@@ -63,8 +70,7 @@ const SelectedOption = styled.div<{
   background-color: #fff;
   cursor: pointer;
   height: 48px;
-  color: ${({ selectedOption, defaultValue }) =>
-    selectedOption === defaultValue ? "rgba(0, 0, 0, 0.6)" : "#000"};
+  color: ${({ isdefault }) => (isdefault ? "rgba(0, 0, 0, 0.6)" : "#000")};
 `;
 
 const Arrow = styled.span`
