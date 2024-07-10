@@ -31,8 +31,10 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
   };
 
   useEffect(() => {
-    setValue(`education.${index}.quality`, selectedOption);
-    if (selectedOption === defaultValue) {
+    if (selectedOption !== defaultValue) {
+      setValue(`education.${index}.quality`, selectedOption);
+    }
+    if (selectedOption !== defaultValue) {
       setError(`education.${index}.quality`, {
         type: "manual",
         message: "Please select a different option",
