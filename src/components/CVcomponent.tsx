@@ -17,6 +17,16 @@ interface ExperienceItem {
   description: string;
 }
 
+type EducationData = {
+  education: {
+    school: string;
+    quality: string;
+    startingDate: string;
+    finishingDate: string;
+    description: string;
+  }[];
+};
+
 function CVcomponent() {
   const location = useLocation();
 
@@ -28,6 +38,11 @@ function CVcomponent() {
   const experienceDataString = localStorage.getItem("experienceFormData");
   const experienceData: ExperienceItem[] | null = experienceDataString
     ? JSON.parse(experienceDataString).experience
+    : null;
+
+  const educationDataString = localStorage.getItem("educationFormData");
+  const educationData: EducationData[] | null = educationDataString
+    ? JSON.parse(educationDataString).education
     : null;
 
   return (
@@ -70,6 +85,22 @@ function CVcomponent() {
             ))}
         </>
       )}
+      {location.pathname !== "/Home" &&
+        location.pathname !== "/PersonalInfo" &&
+        location.pathname !== "/Experience" && (
+          <>
+            <Divider />
+            <Experience>განათლება</Experience>
+            {experienceData &&
+              experienceData.map((item, index) => (
+                <ExperienceItemWrapper key={index}>
+                  <Position>{`${item.position} ${item.employer}`}</Position>
+                  <Date>{`${item.startingDate} ${item.finishingDate}`}</Date>
+                  <Description>{item.description}</Description>
+                </ExperienceItemWrapper>
+              ))}
+          </>
+        )}
     </div>
   );
 }

@@ -34,7 +34,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
     if (selectedOption !== defaultValue) {
       setValue(`education.${index}.quality`, selectedOption);
     }
-    if (selectedOption !== defaultValue) {
+    if (selectedOption === defaultValue) {
       setError(`education.${index}.quality`, {
         type: "manual",
         message: "Please select a different option",
@@ -46,7 +46,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
   console.log(errors);
 
   const getBorderColor = () => {
-    const value = watch(`education.${index}.description`);
+    const value = watch(`education.${index}.quality`);
     const hasSubmitted = submitCount > 0;
     const error = errors?.education?.[index]?.quality;
 
