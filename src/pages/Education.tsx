@@ -1,12 +1,19 @@
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import { FormProvider, useForm, useFieldArray } from "react-hook-form";
+import {
+  FormProvider,
+  useForm,
+  useFieldArray,
+  Controller,
+} from "react-hook-form";
 import { useEffect } from "react";
 import CVcomponent from "../components/CVcomponent";
 import Input from "../components/education/Input";
 import Header from "../components/education/Header";
-import CustomSelect from "../components/customSelect";
 
+import { Select } from "antd";
+
+const { Option } = Select;
 export type formTypes = {
   education: {
     school: string;
@@ -48,6 +55,8 @@ export default function Education() {
     control,
     name: "education",
   });
+
+  console.log(errors);
 
   const getBorderColor = (index: number) => {
     const value = watch(`education.${index}.description`);
@@ -111,11 +120,28 @@ export default function Education() {
                       className="custom-select"
                       style={{ width: "calc(50% - 23px)" }}
                     >
-                      <Label>ხარისხი</Label>
-                      <CustomSelect
-                        defaultValue="აირჩიეთ ხარისხი"
-                        options={["alo", "fu", "jeka"]}
-                        index={index}
+                      <Label style={{ display: "block" }}>ხარისხი</Label>
+                      <Controller
+                        name={`education.${index}.quality`}
+                        control={control}
+                        rules={{
+                          required: true,
+                        }}
+                        render={({ field }) => (
+                          <Select
+                            {...field}
+                            style={{
+                              marginTop: "8px",
+                              height: "48px",
+                              width: "100%",
+                            }}
+                          >
+                            <Option value="net1">Net 1 day</Option>
+                            <Option value="net7">Net 7 days</Option>
+                            <Option value="net14">Net 14 days</Option>
+                            <Option value="net30">Net 30 days</Option>
+                          </Select>
+                        )}
                       />
                     </div>
                     <div style={{ width: "calc(50% - 23px)" }}>
