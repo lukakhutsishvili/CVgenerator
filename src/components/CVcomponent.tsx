@@ -18,13 +18,11 @@ interface ExperienceItem {
 }
 
 type EducationData = {
-  education: {
-    school: string;
-    quality: string;
-    startingDate: string;
-    finishingDate: string;
-    description: string;
-  }[];
+  school: string;
+  quality: string;
+  startingDate: string;
+  finishingDate: string;
+  description: string;
 };
 
 function CVcomponent() {
@@ -44,6 +42,8 @@ function CVcomponent() {
   const educationData: EducationData[] | null = educationDataString
     ? JSON.parse(educationDataString).education
     : null;
+
+  console.log(educationData);
 
   return (
     <div style={{ padding: "48px 75px" }}>
@@ -91,12 +91,12 @@ function CVcomponent() {
           <>
             <Divider />
             <Experience>განათლება</Experience>
-            {experienceData &&
-              experienceData.map((item, index) => (
+            {educationData &&
+              educationData.map((item, index) => (
                 <ExperienceItemWrapper key={index}>
-                  <Position>{`${item.position} ${item.employer}`}</Position>
-                  <Date>{`${item.startingDate} ${item.finishingDate}`}</Date>
-                  <Description>{item.description}</Description>
+                  <Position>{`${item.school} ${item.finishingDate}`}</Position>
+                  {/* <Date>{`${item.startingDate} ${item.finishingDate}`}</Date>
+                  <Description>{item.description}</Description> */}
                 </ExperienceItemWrapper>
               ))}
           </>
