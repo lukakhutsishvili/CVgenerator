@@ -94,9 +94,9 @@ function CVcomponent() {
             {educationData &&
               educationData.map((item, index) => (
                 <ExperienceItemWrapper key={index}>
-                  <Position>{`${item.school} ${item.finishingDate}`}</Position>
-                  {/* <Date>{`${item.startingDate} ${item.finishingDate}`}</Date>
-                  <Description>{item.description}</Description> */}
+                  <Position>{`${item.school} ${item.quality}`}</Position>
+                  <Date>{`${item.finishingDate}`}</Date>
+                  <Description>{item.description}</Description>
                 </ExperienceItemWrapper>
               ))}
           </>
