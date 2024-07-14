@@ -9,11 +9,16 @@
   font-family: myFont;
 }
 
-html,
-body,
-#root {
-  font-family: myFont;
-  min-height: 100vh;
+body {
+  display: none;
 }
 
-
+@media (min-width: 1780px) {
+  html,
+  body,
+  #root {
+    font-family: myFont;
+    min-height: 100vh;
+    display: block;
+  }
+}

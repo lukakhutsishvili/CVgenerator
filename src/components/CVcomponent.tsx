@@ -7,6 +7,7 @@ interface PersonalInfoData {
   email: string;
   phoneNumber: string;
   about?: string;
+  photoUrl: string;
 }
 
 interface ExperienceItem {
@@ -33,6 +34,7 @@ function CVcomponent() {
     ? JSON.parse(personalInfoDataString)
     : null;
 
+  console.log(personalInfoData);
   const experienceDataString = localStorage.getItem("experienceFormData");
   const experienceData: ExperienceItem[] | null = experienceDataString
     ? JSON.parse(experienceDataString).experience
@@ -46,29 +48,41 @@ function CVcomponent() {
   console.log(educationData);
 
   return (
-    <div style={{ padding: "48px 75px" }}>
+    <div style={{ padding: "48px 75px", width: "-webkit-fill-available" }}>
       {personalInfoData && (
-        <div>
-          <Header>
-            <Experience>{personalInfoData.name}</Experience>
-            <Experience style={{ marginLeft: "20px" }}>
-              {personalInfoData.surname}
-            </Experience>
-          </Header>
-          <ContactInfo>
-            <img src="/images/Vector (1).png" alt="Email Icon" />
-            <ContactText>{personalInfoData.email}</ContactText>
-          </ContactInfo>
-          <ContactInfo>
-            <img src="/images/Vector (2).png" alt="Phone Icon" />
-            <ContactText>{personalInfoData.phoneNumber}</ContactText>
-          </ContactInfo>
-          {personalInfoData.about && (
-            <>
-              <Experience>ჩემს შესახებ</Experience>
-              <AboutText>{personalInfoData.about}</AboutText>
-            </>
-          )}
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div>
+            <Header>
+              <Experience>{personalInfoData.name}</Experience>
+              <Experience style={{ marginLeft: "20px" }}>
+                {personalInfoData.surname}
+              </Experience>
+            </Header>
+            <ContactInfo>
+              <img src="/images/Vector (1).png" alt="Email Icon" />
+              <ContactText>{personalInfoData.email}</ContactText>
+            </ContactInfo>
+            <ContactInfo>
+              <img src="/images/Vector (2).png" alt="Phone Icon" />
+              <ContactText>{personalInfoData.phoneNumber}</ContactText>
+            </ContactInfo>
+            {personalInfoData.about && (
+              <>
+                <Experience>ჩემს შესახებ</Experience>
+                <AboutText>{personalInfoData.about}</AboutText>
+              </>
+            )}
+          </div>
+          <div
+            style={{
+              overflow: "hidden",
+              width: "246px",
+              height: "246px",
+              borderRadius: "50%",
+            }}
+          >
+            <img style={{width: "100%"}} src={personalInfoData.photoUrl} />
+          </div>
         </div>
       )}
       {location.pathname !== "/" && location.pathname !== "/PersonalInfo" && (
