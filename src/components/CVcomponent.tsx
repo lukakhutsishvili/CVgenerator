@@ -48,74 +48,105 @@ function CVcomponent() {
   console.log(educationData);
 
   return (
-    <div style={{ padding: "48px 75px", width: "-webkit-fill-available" }}>
-      {personalInfoData && (
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div>
-            <Header>
-              <Experience>{personalInfoData.name}</Experience>
-              <Experience style={{ marginLeft: "20px" }}>
-                {personalInfoData.surname}
-              </Experience>
-            </Header>
-            <ContactInfo>
-              <img src="/images/Vector (1).png" alt="Email Icon" />
-              <ContactText>{personalInfoData.email}</ContactText>
-            </ContactInfo>
-            <ContactInfo>
-              <img src="/images/Vector (2).png" alt="Phone Icon" />
-              <ContactText>{personalInfoData.phoneNumber}</ContactText>
-            </ContactInfo>
-            {personalInfoData.about && (
+    <div style={{ minHeight: "100%", background: "#f9f9f9" }}>
+      <div
+        style={{
+          width: "-webkit-fill-available",
+          height: "1080px",
+          background: "white",
+          position: "relative",
+        }}
+      >
+        <div
+          style={{
+            overflow: "scroll",
+            background: "white",
+            height: "944px",
+            padding: "48px 75px",
+          }}
+        >
+          {personalInfoData && (
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <div>
+                <Header>
+                  <Experience>{personalInfoData.name}</Experience>
+                  <Experience style={{ marginLeft: "20px" }}>
+                    {personalInfoData.surname}
+                  </Experience>
+                </Header>
+                <ContactInfo>
+                  <img src="/images/Vector (1).png" alt="Email Icon" />
+                  <ContactText>{personalInfoData.email}</ContactText>
+                </ContactInfo>
+                <ContactInfo>
+                  <img src="/images/Vector (2).png" alt="Phone Icon" />
+                  <ContactText>{personalInfoData.phoneNumber}</ContactText>
+                </ContactInfo>
+                {personalInfoData.about && (
+                  <>
+                    <Experience>ჩემს შესახებ</Experience>
+                    <AboutText>{personalInfoData.about}</AboutText>
+                  </>
+                )}
+              </div>
+              <div
+                style={{
+                  overflow: "hidden",
+                  width: "246px",
+                  height: "246px",
+                  borderRadius: "50%",
+                  flexShrink: "0",
+                }}
+              >
+                <img
+                  style={{ width: "100%" }}
+                  src={personalInfoData.photoUrl}
+                />
+              </div>
+            </div>
+          )}
+          {location.pathname !== "/" &&
+            location.pathname !== "/PersonalInfo" && (
               <>
-                <Experience>ჩემს შესახებ</Experience>
-                <AboutText>{personalInfoData.about}</AboutText>
+                <Divider />
+                <Experience>ᲒᲐᲛᲝᲪᲓᲘᲚᲔᲑᲐ</Experience>
+                {experienceData &&
+                  experienceData.map((item, index) => (
+                    <ExperienceItemWrapper key={index}>
+                      <Position>{`${item.position} ${item.employer}`}</Position>
+                      <Date>{`${item.startingDate} ${item.finishingDate}`}</Date>
+                      <Description>{item.description}</Description>
+                    </ExperienceItemWrapper>
+                  ))}
               </>
             )}
-          </div>
+          {location.pathname !== "/Home" &&
+            location.pathname !== "/PersonalInfo" &&
+            location.pathname !== "/Experience" && (
+              <>
+                <Divider />
+                <Experience>განათლება</Experience>
+                {educationData &&
+                  educationData.map((item, index) => (
+                    <ExperienceItemWrapper key={index}>
+                      <Position>{`${item.school} ${item.quality}`}</Position>
+                      <Date>{`${item.finishingDate}`}</Date>
+                      <Description>{item.description}</Description>
+                    </ExperienceItemWrapper>
+                  ))}
+              </>
+            )}
+        </div>
           <div
             style={{
-              overflow: "hidden",
-              width: "246px",
-              height: "246px",
-              borderRadius: "50%",
-              flexShrink: "0",
+              background: "white",
+              position: "absolute",
+              padding: "48px 75px",
             }}
           >
-            <img style={{ width: "100%" }} src={personalInfoData.photoUrl} />
+            <img src="/images/LOGO-12 1.png" />
           </div>
-        </div>
-      )}
-      {location.pathname !== "/" && location.pathname !== "/PersonalInfo" && (
-        <>
-          <Divider />
-          <Experience>ᲒᲐᲛᲝᲪᲓᲘᲚᲔᲑᲐ</Experience>
-          {experienceData &&
-            experienceData.map((item, index) => (
-              <ExperienceItemWrapper key={index}>
-                <Position>{`${item.position} ${item.employer}`}</Position>
-                <Date>{`${item.startingDate} ${item.finishingDate}`}</Date>
-                <Description>{item.description}</Description>
-              </ExperienceItemWrapper>
-            ))}
-        </>
-      )}
-      {location.pathname !== "/Home" &&
-        location.pathname !== "/PersonalInfo" &&
-        location.pathname !== "/Experience" && (
-          <>
-            <Divider />
-            <Experience>განათლება</Experience>
-            {educationData &&
-              educationData.map((item, index) => (
-                <ExperienceItemWrapper key={index}>
-                  <Position>{`${item.school} ${item.quality}`}</Position>
-                  <Date>{`${item.finishingDate}`}</Date>
-                  <Description>{item.description}</Description>
-                </ExperienceItemWrapper>
-              ))}
-          </>
-        )}
+      </div>
     </div>
   );
 }
