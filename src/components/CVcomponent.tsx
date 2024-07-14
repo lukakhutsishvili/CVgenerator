@@ -79,9 +79,10 @@ function CVcomponent() {
               width: "246px",
               height: "246px",
               borderRadius: "50%",
+              flexShrink: "0",
             }}
           >
-            <img style={{width: "100%"}} src={personalInfoData.photoUrl} />
+            <img style={{ width: "100%" }} src={personalInfoData.photoUrl} />
           </div>
         </div>
       )}
@@ -143,6 +144,9 @@ const AboutText = styled.p`
   font-size: 18px;
   font-weight: 500;
   margin-top: 15px;
+  word-break: break-word;
+  white-space: normal;
+  overflow-wrap: break-word;
 `;
 
 const Divider = styled.div`
