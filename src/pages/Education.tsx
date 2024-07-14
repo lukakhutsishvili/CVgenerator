@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import CVcomponent from "../components/CVcomponent";
 import Input from "../components/education/Input";
 import Header from "../components/education/Header";
+import "../index.css";
 
 import { Select } from "antd";
 
@@ -58,10 +59,13 @@ export default function Education() {
 
   console.log(errors);
 
-  const getBorderColor = (index: number) => {
-    const value = watch(`education.${index}.description`);
+  const getBorderColor = (
+    index: number,
+    name: keyof formTypes["education"][number]
+  ) => {
+    const value = watch(`education.${index}.${name}`);
     const hasSubmitted = submitCount > 0;
-    const error = errors?.education?.[index]?.description;
+    const error = errors?.education?.[index]?.[name];
 
     if (hasSubmitted) {
       if (error) {
@@ -124,23 +128,30 @@ export default function Education() {
                       <Controller
                         name={`education.${index}.quality`}
                         control={control}
-                        rules={{
-                          required: true,
-                        }}
+                        rules={{ required: true }}
                         render={({ field }) => (
-                          <Select
-                            {...field}
-                            style={{
-                              marginTop: "8px",
-                              height: "48px",
-                              width: "100%",
-                            }}
+                          <StyledSelectWrapper
+                            haserror={() => getBorderColor(index, "quality")}
                           >
-                            <Option value="net1">Net 1 day</Option>
-                            <Option value="net7">Net 7 days</Option>
-                            <Option value="net14">Net 14 days</Option>
-                            <Option value="net30">Net 30 days</Option>
-                          </Select>
+                            <Select
+                              {...field}
+                              style={{
+                                marginTop: "8px",
+                                height: "48px",
+                                width: "100%",
+                              }}
+                              className={
+                                !!errors?.education?.[index]?.quality
+                                  ? "has-error"
+                                  : ""
+                              }
+                            >
+                              <Option value="net1">Net 1 day</Option>
+                              <Option value="net7">Net 7 days</Option>
+                              <Option value="net14">Net 14 days</Option>
+                              <Option value="net30">Net 30 days</Option>
+                            </Select>
+                          </StyledSelectWrapper>
                         )}
                       />
                     </div>
@@ -157,7 +168,9 @@ export default function Education() {
                     {...register(`education.${index}.description`, {
                       required: true,
                     })}
-                    style={{ borderColor: getBorderColor(index) }}
+                    style={{
+                      borderColor: getBorderColor(index, "description"),
+                    }}
                   ></TextArea>
                   <div
                     style={{
@@ -285,4 +298,21 @@ const Label = styled.label`
   font-size: 16px;
   font-weight: bold;
   line-height: 1.31;
+`;
+
+const StyledSelectWrapper = styled.div<{ haserror: () => string }>`
+  .ant-select-focused:where(
+      .css-dev-only-do-not-override-98ntnt
+    ).ant-select-outlined:not(.ant-select-disabled):not(
+      .ant-select-customize-input
+    ):not(.ant-pagination-size-changer)
+    .ant-select-selector {
+    border-color: ${({ haserror }) => haserror()};
+  }
+  :where(.css-dev-only-do-not-override-98ntnt).ant-select-outlined:not(
+      .ant-select-customize-input
+    )
+    .ant-select-selector {
+    border-color: ${({ haserror }) => haserror()};
+  }
 `;

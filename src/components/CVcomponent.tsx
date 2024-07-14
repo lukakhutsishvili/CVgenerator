@@ -48,7 +48,13 @@ function CVcomponent() {
   console.log(educationData);
 
   return (
-    <div style={{ minHeight: "100%", background: "#f9f9f9" }}>
+    <div
+      style={{
+        minHeight: "100%",
+        background: "#f9f9f9",
+        width: "-webkit-fill-available",
+      }}
+    >
       <div
         style={{
           width: "-webkit-fill-available",
@@ -137,15 +143,15 @@ function CVcomponent() {
               </>
             )}
         </div>
-          <div
-            style={{
-              background: "white",
-              position: "absolute",
-              padding: "48px 75px",
-            }}
-          >
-            <img src="/images/LOGO-12 1.png" />
-          </div>
+        <div
+          style={{
+            background: "white",
+            position: "absolute",
+            padding: "48px 75px",
+          }}
+        >
+          <img src="/images/LOGO-12 1.png" />
+        </div>
       </div>
     </div>
   );
