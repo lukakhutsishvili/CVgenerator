@@ -44,15 +44,15 @@ function CVcomponent() {
   const educationData: EducationData[] | null = educationDataString
     ? JSON.parse(educationDataString).education
     : null;
-
-  console.log(educationData);
-
+  const borderStyle =
+    location.pathname === "/finished" ? "2px solid black" : "none";
   return (
     <div
       style={{
         minHeight: "100%",
         background: "#f9f9f9",
-        width: "-webkit-fill-available",
+        width: "100%",
+        border: borderStyle,
       }}
     >
       <div
@@ -148,6 +148,7 @@ function CVcomponent() {
             background: "white",
             position: "absolute",
             padding: "48px 75px",
+            bottom: "2px",
           }}
         >
           <img src="/images/LOGO-12 1.png" />

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Redberry from "../../public/images/LOGO-02 3.png";
+import Redberry from "/images/LOGO-02 3.png";
 import BackgroundImage from "/images/shutterstock_2189773743 1.png";
 import Agency from "/images/LOGO-02 3.png";
 import { Link } from "react-router-dom";

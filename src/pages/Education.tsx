@@ -216,7 +216,9 @@ export default function Education() {
               <Link to={"/PersonalInfo"}>
                 <BlueButton type="button">უკან</BlueButton>
               </Link>
-              <BlueButton>შემდეგი</BlueButton>
+              <Link to={"/finished"}>
+                <BlueButton>დასრულება</BlueButton>
+              </Link>
             </Footer>
           </MainDiv>
         </form>
