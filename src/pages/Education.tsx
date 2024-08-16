@@ -42,7 +42,7 @@ export default function Education() {
   });
 
   const submit = () => {
-    navigate("/Education");
+    navigate("/finished");
   };
 
   const {
@@ -56,8 +56,6 @@ export default function Education() {
     control,
     name: "education",
   });
-
-  console.log(errors);
 
   const getBorderColor = (
     index: number,
@@ -216,9 +214,7 @@ export default function Education() {
               <Link to={"/PersonalInfo"}>
                 <BlueButton type="button">უკან</BlueButton>
               </Link>
-              <Link to={"/finished"}>
-                <BlueButton>დასრულება</BlueButton>
-              </Link>
+              <BlueButton>დასრულება</BlueButton>
             </Footer>
           </MainDiv>
         </form>

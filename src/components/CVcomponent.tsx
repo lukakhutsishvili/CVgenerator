@@ -34,7 +34,6 @@ function CVcomponent() {
     ? JSON.parse(personalInfoDataString)
     : null;
 
-  console.log(personalInfoData);
   const experienceDataString = localStorage.getItem("experienceFormData");
   const experienceData: ExperienceItem[] | null = experienceDataString
     ? JSON.parse(experienceDataString).experience
